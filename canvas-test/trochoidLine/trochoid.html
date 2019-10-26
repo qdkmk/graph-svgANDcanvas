@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  
+  <link rel="stylesheet" href="css.css">
+</head>
+<body>
+  <canvas id="myCanvas" width="400" height="300"></canvas>
+  
+  
+</body>
+<script>
+let context;
+let canvasWidth;
+let canvasHeight;
+let centerX;
+let centerY;
+const rc = 10000;
+const rm = 9800;
+const rd = 150;
+function initialize() {
+  const canvas = document.getElementById("myCanvas");
+  context = canvas.getContext("2d");
+  canvasWidth = canvas.width;
+  canvasHeight = canvas.height;
+  centerX = canvasWidth / 2;
+  centerY = canvasHeight / 2;
+  context.fillRect(0, 0, canvasWidth, canvasHeight);
+  context.strokeStyle = "hsla(244, 70%, 50%, 1)";
+  context.fillStyle = "rgba(0, 0, 0, 1)";
+  drawTrochoidLines();
+}
+function drawTrochoidLines(){
+  //thetaはランダムな数字。トロコイドの媒介変数を計算する際の回転角θの役割
+  let theta = (new Date().getTime()) / 1000;
+  
+  const delta = theta / 1000;
+  //1〜6まで、小数点以下まで計算される。。。
+  theta %= (Math.PI * 2);
+  
+  
+  let trochoidPoint = getTrochoidPoint(theta);
+  //重なりを新規イメージで埋める次の行のfillRectと合わせてリセットか
+  context.globalCompositeOperation = "source-over";
+  context.fillRect(0, 0, canvasWidth, canvasHeight);
+  //重なりを混色するlighter
+  context.globalCompositeOperation = "lighter";
+  context.beginPath();
+  //moveToペンの位置を初期値に揃える=描き始めの始点の座標
+  context.moveTo(trochoidPoint.x + centerX, trochoidPoint.y + centerY);
+  //5つのトロコイドを用意する
+  for (let i = 0; i < 6; i++) {
+    trochoidPoint = getTrochoidPoint(theta);
+    theta += delta;
+    //canvasの中心からトロコイドポイント（媒介変数表示の点）まで終点の座標
+    context.lineTo(trochoidPoint.x + centerX, trochoidPoint.y + centerY);
+  }
+  //始点〜終点まで描画する。
+  context.stroke();
+  //画面の更新の前にコールバックを呼び出すrequestAnimationFrame
+  window.requestAnimationFrame(drawTrochoidLines);
+}
+//内トロコイドの媒介変数表示
+function getTrochoidPoint(theta) {
+  const _x = (rc - rm) * Math.cos(theta) + rd * Math.cos((rc - rm) / rm * theta);
+  const _y = (rc - rm) * Math.sin(theta) - rd * Math.sin((rc - rm) / rm * theta);
+  return {x: _x, y: _y};
+}
+initialize();
+</script>
+</html>

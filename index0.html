@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html>
+
+<body>
+  
+  <svg width="1000" height="500" viewBox="0 0 400 400"
+     xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <title>Example triangle01- 'path' の単純な例</title>
+  <desc>三角形を描くパス</desc>
+  <rect x="1" y="1" width="398" height="398" fill="none" stroke="blue" />
+  <!--補助点-->
+  <rect x="150" y="150" width="3" height="3" fill="blue" stroke="none" />
+  <!--ベースの補助線-->
+  <path d="M 0 200 L 400 350 z"
+        fill="none" stroke="gray" stroke-width="3" />
+  <!--補助線-->
+  <path d="M 0 200 L 150 150 z"
+        fill="none" stroke="gray" stroke-width="3" />
+<!--垂直二等分線-->
+  <path d="M 0 -50 L 150 400 z"
+        fill="none" stroke="red" stroke-width="3" />
+<!--補助線2-->
+<path d="M 40 213.3 L 150 150 z"
+      fill="none" stroke="gray" stroke-width="3" />
+<!--垂直二等分線2-->
+  <path d="M 0 16.56 L 220.6 400 z"
+        fill="none" stroke="red" stroke-width="3" />
+<!--補助線3-->
+<path d="M 60 220.65 L 150 150 z"
+      fill="none" stroke="gray" stroke-width="3" />
+<!--垂直二等分線3-->
+<path d="M 0 16.56 L 220.6 400 z"
+fill="none" stroke="red" stroke-width="3" />
+
+
+<!--補助線4-->
+<path d="M 80 226.66 L 150 150 z"
+fill="none" stroke="gray" stroke-width="3" />
+<!--垂直二等分線4-->
+<path d="M 0 83.326 L 346.8 400 z"
+fill="none" stroke="red" stroke-width="3" />
+
+<!--補助線5-->
+<path d="M 100 233.33 L 150 150 z"
+fill="none" stroke="gray" stroke-width="3" />
+<!--垂直二等分線5-->
+<path d="M 0 116.66 L 472.2 400 z"
+fill="none" stroke="red" stroke-width="3" />
+
+<!--補助線6-->
+<path d="M 120 240 L 150 150 z"
+fill="none" stroke="gray" stroke-width="3" />
+<!--垂直二等分線6-->
+<path d="M 0 150 L 750 400 z"
+fill="none" stroke="red" stroke-width="3" />
+
+
+<!--補助線7-->
+<path d="M 140 246.66 L 150 150 z"
+fill="none" stroke="gray" stroke-width="3" />
+<!--垂直二等分線7-->
+<path d="M 0 183.32 L 2094 400 z"
+fill="none" stroke="red" stroke-width="3" />
+
+<!--補助線8-->
+<path d="M 160 253.33 L 150 150 z"
+fill="none" stroke="yellow" stroke-width="3" />
+<!--垂直二等分線8-->
+<path d="M 0 216.66 L -1894.4 400 z"
+fill="none" stroke="yellow" stroke-width="3" />
+
+<!--補助線9-->
+<path d="M 180 260 L 150 150 z"
+fill="none" stroke="gray" stroke-width="3" />
+<!--垂直二等分線4-->
+<path d="M 0 -250 L -550 400 z"
+fill="none" stroke="red" stroke-width="3" />
+
+<!--補助線10-->
+<path d="M 200 266.66 L 150 150 z"
+fill="none" stroke="gray" stroke-width="3" />
+<!--垂直二等分線4-->
+<path d="M 0 283.33 L -272 400 z"
+fill="none" stroke="red" stroke-width="3" />
+</svg>
+  
+<!--<path d="M 100 100 L 300 100 v 100 z"
+fill="red" stroke="blue" stroke-width="3" />
+200,100
+50,300
+<path d="M 100 100 L 300 200 v 100 z"
+      fill="none" stroke="black" stroke-width="3" />
+-->
+  
+</body>
+<script>
+  function linedot(ax,ay,bx,by,i){
+    //傾き
+    let r = (by-ay)/(bx-ax) 
+    //x切片:ay x=40のとき
+    //let cy = -1 *r*40 + ay
+    //x=60のとき
+    let cy = -1 *r*i + ay
+    console.log("ver" + i)
+    console.log(r,ay,cy)
+    return (r,ay,cy)
+  }
+  function perpendicularBisector(ax,ay){
+    let bx = 150;
+    let by = 150;
+    //中点cx,cy
+    let cx = (bx + ax)/2
+    let cy = (by + ay)/2
+    //line
+    dy1 =cy-(-1 * (bx-ax)/(by-ay) * cx)
+    dx1 = 0;
+    dy2 = 400;
+    dx2 =cx + (-1 * (by-ay)/(bx-ax) * (400-cy))
+    console.log(dy1,dx2);
+    return (dx1,dy1,dx2,dy2)
+  }
+  function linedots(){
+    for(var i=40;i <= 400;i =i+20){
+      linedot(0,200,150,150,i);    
+    }
+  }
+  function loopPerpendicularBisector(){
+      perpendicularBisector(80,226.66)
+      perpendicularBisector(100,233.33)
+      perpendicularBisector(120,240)
+      perpendicularBisector(140,246.66)
+      perpendicularBisector(160,253.33)
+      perpendicularBisector(180,260)
+      perpendicularBisector(200,266.66)
+
+  }
+  loopPerpendicularBisector()
+  //perpendicularBisector(0,200)
+  //perpendicularBisector(40,213.3)
+  //linedot(0,200,150,150)
+  //linedots()
+</script>
+
+</html>
